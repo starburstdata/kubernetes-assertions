@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.stakater.kubernetes</groupId>
+    <artifactId>assertions</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-api</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-utils</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.assertj</groupId>
+                        <artifactId>assertj-core</artifactId>
+                        <version>2.4.0</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>io.fabric8.assertj</groupId>
+                        <artifactId>assertj-assertions-generator</artifactId>
+                        <version>2.0.1.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <packages>
+                        <param>io.fabric8.kubernetes.api.model</param>
+                        <param>io.fabric8.openshift.api.model</param>
+                    </packages>
+
+                    <!-- whether generated assertions classes can be inherited with consistent assertion chaining -->
+                    <hierarchical>true</hierarchical>
+                    <!-- where to generate assertions entry point classes -->
+                    <entryPointClassPackage>io.fabric8.kubernetes.assertions.internal</entryPointClassPackage>
+
+                    <!-- excludes with regex classes from generation -->
+                    <excludes>
+                        <param>.*Doneable.*</param>
+                        <param>.*Editable.*</param>
+                        <param>.*Builder</param>
+                        <param>.*Fluent</param>
+                        <param>.*FluentImpl</param>
+                    </excludes>
+                    <!-- base directory where to generate assertions -->
+                    <targetDir>${basedir}/target/generated-sources</targetDir>
+                    <!-- select which assertions entry point classes to generate -->
+                    <generateAssertions>true</generateAssertions>
+                    <generateBddAssertions>false</generateBddAssertions>
+                    <generateSoftAssertions>false</generateSoftAssertions>
+                    <generateJUnitSoftAssertions>false</generateJUnitSoftAssertions>
+
+                    <templates>
+                        <templatesDirectory>${basedir}/src/main/assertj-templates</templatesDirectory>
+
+                        <objectAssertion>navigation_template.txt</objectAssertion>
+                        <iterableAssertion>has_elements_assertion_template_for_iterable.txt</iterableAssertion>
+                        <hierarchicalAssertionAbstractClass>custom_abstract_assertion_class_template.txt</hierarchicalAssertionAbstractClass>
+                    </templates>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>generate-tests</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-assertions</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-sources</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>io.fabric8.kubernetes.assertions.Example</mainClass>
+                    <classpathScope>test</classpathScope>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
