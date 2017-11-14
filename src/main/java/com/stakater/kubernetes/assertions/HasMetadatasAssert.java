@@ -42,23 +42,6 @@ public abstract class HasMetadatasAssert<R extends HasMetadata, AI extends HasMe
         }
 
         /**
-         * Asserts that this collection has at least one element and returns the first one
-         */
-        public R first() {
-            assertSize().isGreaterThan(0);
-            return get().get(0);
-        }
-
-        /**
-         * Asserts that this collection has at least one element and returns the last one
-         */
-        public R last() {
-            assertSize().isGreaterThan(0);
-            List<R> list = get();
-            return list.get(list.size() - 1);
-        }
-
-        /**
          * Asserts that this collection has a resource with the given name and return it
          *
          * @return returns the matching resource
