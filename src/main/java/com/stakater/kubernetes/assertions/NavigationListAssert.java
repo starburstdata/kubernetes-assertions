@@ -1,9 +1,6 @@
 package com.stakater.kubernetes.assertions;
 
-import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.AssertFactory;
-import org.assertj.core.api.ListAssert;
-import org.assertj.core.api.ObjectAssert;
+import org.assertj.core.api.*;
 
 import java.util.List;
 
@@ -13,15 +10,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Provides helper methods for navigating a list property in a generated assertion class
  *
- * TODO replace with the same class from assertj-core when this issue is fixed and released:
- * https://github.com/joel-costigliola/assertj-core/issues/641
  */
-public class NavigationListAssert<T, EA extends AbstractAssert> extends ListAssert<T> {
+public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends FactoryBasedNavigableListAssert<NavigationListAssert<T, EA>, List<? extends T>, T, EA> {
     private final AssertFactory<T, EA> assertFactory;
 
     public NavigationListAssert(List<? extends T> actual, AssertFactory<T, EA> assertFactory) {
-        super(actual);
+        super(actual, NavigationListAssert.class, assertFactory);
         this.assertFactory = assertFactory;
+    }
+
+    /**
+     * Navigates to the first element in the list if the list is not empty
+     *
+     * @return the assertion on the first element
+     */
+    public EA first() {
+        isNotEmpty();
+        return toAssert(actual.get(0), Assertions.joinDescription(this, "first()"));
+    }
+
+    /**
+     * Navigates to the last element in the list if the list is not empty
+     *
+     * @return the assertion on the last element
+     */
+    public EA last() {
+        isNotEmpty();
+        return toAssert(actual.get(actual.size() - 1), Assertions.joinDescription(this, "last()"));
     }
 
     /**
@@ -34,5 +49,9 @@ public class NavigationListAssert<T, EA extends AbstractAssert> extends ListAsse
         isNotEmpty();
         assertThat(index).describedAs(Assertions.joinDescription(this, "index")).isGreaterThanOrEqualTo(0).isLessThan(actual.size());
         return assertFactory.createAssert(actual.get(index));
+    }
+
+    public EA toAssert(T value, String description) {
+        return assertFactory.createAssert(value).describedAs(description);
     }
 }
