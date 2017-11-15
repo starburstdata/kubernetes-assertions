@@ -3,7 +3,7 @@ package com.stakater.kubernetes.assertions;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.IntegerAssert;
-import org.assertj.core.api.ListAssert;
+import org.assertj.core.api.ObjectAssert;
 import org.assertj.core.api.filter.Filters;
 import org.assertj.core.util.Lists;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  */
-public abstract class HasMetadatasAssert<R extends HasMetadata, AI extends HasMetadatasAssert> extends ListAssert<R> {
+public abstract class HasMetadatasAssert<R extends HasMetadata, AI extends HasMetadatasAssert> extends MetadatasListAssert<R> {
     public HasMetadatasAssert(List<R> actual) {
         super(actual);
     }
@@ -44,18 +44,18 @@ public abstract class HasMetadatasAssert<R extends HasMetadata, AI extends HasMe
     /**
      * Asserts that this collection has at least one element and returns the first one
      */
-    public R first() {
+    public ObjectAssert<R> first() {
         assertSize().isGreaterThan(0);
-        return get().get(0);
+        return new ObjectAssert<>(get().get(0));
     }
 
     /**
      * Asserts that this collection has at least one element and returns the last one
      */
-    public R last() {
+    public ObjectAssert<R> last() {
         assertSize().isGreaterThan(0);
         List<R> list = get();
-        return list.get(list.size() - 1);
+        return new ObjectAssert<>(list.get(list.size() - 1));
     }
 
 
