@@ -13,6 +13,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.assertj:assertj-core:3.8.0" level="project" />
     <orderEntry type="library" name="Maven: io.fabric8:kubernetes-api:3.0.8" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.fabric8:openshift-client:3.0.3" level="project" />
