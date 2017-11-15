@@ -47,10 +47,9 @@ public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends F
      * @return the assertion on the given element
      */
     public EA item(int index) {
-
         isNotEmpty();
         assertThat(index).describedAs(Assertions.joinDescription(this, "index")).isGreaterThanOrEqualTo(0).isLessThan(actual.size());
-        return assertFactory.createAssert(actual.get(index));
+        return toAssert(actual.get(index), Assertions.joinDescription(this, "index(" + index + ")"));
     }
 
     public EA toAssert(T value, String description) {
