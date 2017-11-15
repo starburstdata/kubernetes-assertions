@@ -1,6 +1,8 @@
 package com.stakater.kubernetes.assertions;
 
-import org.assertj.core.api.*;
+import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.AssertFactory;
+import org.assertj.core.api.FactoryBasedNavigableListAssert;
 
 import java.util.List;
 
