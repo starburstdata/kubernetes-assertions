@@ -1,3 +1,4 @@
 # Don't track "target" folder
 /target/
 /.idea/
+!.mvn/wrapper/maven-wrapper.jar
