@@ -31,17 +31,17 @@ mavenNode(mavenImage: 'openjdk:8') {
             checkout scm
         }
 
+        stage('Canary Release') {
+            mavenCanaryRelease2 {
+                version = canaryVersion
+            }
+        }
+
         stage('Integration Tests') {
             mavenIntegrationTest {
                 environment = 'Testing'
                 failIfNoTests = lFailIfNoTests
                 itestPattern = localItestPattern
-            }
-        }
-
-        stage('Canary Release') {
-            mavenCanaryRelease2 {
-                version = canaryVersion
             }
         }
     }
