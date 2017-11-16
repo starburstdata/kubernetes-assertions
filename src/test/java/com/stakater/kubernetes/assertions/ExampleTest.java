@@ -18,10 +18,10 @@ import static io.fabric8.utils.Asserts.assertAssertionError;
 
 /**
  */
-public class ExampleTest {
+class ExampleTest {
 
     @Test
-    public void testNavigationAssertions() throws Exception {
+    void testNavigationAssertions() throws Exception {
         String expectedId = "abc";
         Map<String, String> expectedLabels = new HashMap<>();
         expectedLabels.put("foo", "bar");
@@ -60,7 +60,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void testNullNavigationOnPod() throws Exception {
+    void testNullNavigationOnPod() throws Exception {
         final Pod pod = new Pod();
         pod.setMetadata(null);
 
@@ -73,7 +73,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void testNullNavigationOnRC() throws Exception {
+    void testNullNavigationOnRC() throws Exception {
         final ReplicationController rc = new ReplicationController();
 
         assertAssertionError(new Block() {
@@ -85,7 +85,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void testNavigationListAssertions() throws Exception {
+    void testNavigationListAssertions() throws Exception {
         final String id1 = "abc";
         final String id2 = "def";
         Map<String, String> labels1 = new HashMap<>();
