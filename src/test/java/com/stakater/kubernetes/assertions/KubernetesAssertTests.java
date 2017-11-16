@@ -1,8 +1,6 @@
 package com.stakater.kubernetes.assertions;
 
 import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.client.DefaultKubernetesClient;
-import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.openshift.api.model.DeploymentConfig;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +8,8 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KubernetesAssertTests {
-    private final KubernetesClient kClient = new DefaultKubernetesClient();
-    private final KubernetesAssert kAssert = new KubernetesAssert(kClient );
+public class KubernetesAssertTests extends TestBase {
+
 
     @Test
     void testNamespace() {

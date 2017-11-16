@@ -1,21 +1,18 @@
 package com.stakater.kubernetes.assertions;
 
-import io.fabric8.kubernetes.client.DefaultKubernetesClient;
-import io.fabric8.kubernetes.client.KubernetesClient;
 import org.junit.jupiter.api.Test;
 
 import static com.stakater.kubernetes.assertions.Assertions.assertThat;
 
-class AssertionTests {
-    private final KubernetesClient client = new DefaultKubernetesClient();
+class AssertionTests extends TestBase {
 
     @Test
     void testDeploymentPodIsReadyForPeriod() {
-        assertThat(client).deployments().pods().isPodReadyForPeriod();
+        assertThat(kClient).deployments().pods().isPodReadyForPeriod();
     }
 
     @Test
     void testAllServicesHaveEndpointOrReadyPod() {
-        assertThat(client).services().assertAllServicesHaveEndpointOrReadyPod();
+        assertThat(kClient).services().assertAllServicesHaveEndpointOrReadyPod();
     }
 }
