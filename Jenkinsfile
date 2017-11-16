@@ -5,7 +5,7 @@ def localItestPattern = ""
 try {
     localItestPattern = ITEST_PATTERN
 } catch (Throwable e) {
-    localItestPattern = "*"
+    localItestPattern = "com.stakater.kubernetes.assertions.*Tests"
 }
 
 def localFailIfNoTests = ""
