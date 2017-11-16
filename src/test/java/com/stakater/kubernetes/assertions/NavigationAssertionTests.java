@@ -18,7 +18,7 @@ import static io.fabric8.utils.Asserts.assertAssertionError;
 
 /**
  */
-class ExampleTest {
+class NavigationAssertionTests {
 
     @Test
     void testNavigationAssertions() throws Exception {
