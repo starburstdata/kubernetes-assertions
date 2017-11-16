@@ -1,6 +1,20 @@
 #!/usr/bin/env groovy
 @Library('github.com/stakater/fabric8-pipeline-library@master')
 
+def localItestPattern = ""
+try {
+    localItestPattern = ITEST_PATTERN
+} catch (Throwable e) {
+    localItestPattern = "*"
+}
+
+def localFailIfNoTests = ""
+try {
+    localFailIfNoTests = ITEST_FAIL_IF_NO_TEST
+} catch (Throwable e) {
+    localFailIfNoTests = "false"
+}
+
 def versionPrefix = ""
 try {
     versionPrefix = VERSION_PREFIX
@@ -20,6 +34,14 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('Canary Release') {
             mavenCanaryRelease2 {
                 version = canaryVersion
+            }
+        }
+
+        stage('Integration Tests') {
+            mavenIntegrationTest {
+                environment = 'Testing'
+                failIfNoTests = lFailIfNoTests
+                itestPattern = localItestPattern
             }
         }
     }
