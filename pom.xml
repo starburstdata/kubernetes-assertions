@@ -50,6 +50,12 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -215,6 +221,7 @@
         <assertj.core.version>3.8.0</assertj.core.version>
         <fabric8.maven.plugin.version>3.5.31</fabric8.maven.plugin.version>
         <junit.platform.version>1.0.1</junit.platform.version>
+        <junit.jupiter.version>5.0.2</junit.jupiter.version>
     </properties>
 
 </project>
