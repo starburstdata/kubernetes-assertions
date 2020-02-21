@@ -1,6 +1,6 @@
 package com.stakater.kubernetes.assertions;
 
-import io.fabric8.kubernetes.api.model.extensions.ReplicaSet;
+import io.fabric8.kubernetes.api.model.apps.ReplicaSet;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

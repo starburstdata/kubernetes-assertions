@@ -17,8 +17,8 @@ import io.fabric8.kubernetes.api.model.ServiceListAssert;
 import io.fabric8.kubernetes.api.model.ServicePort;
 import io.fabric8.kubernetes.api.model.ServiceSpec;
 import io.fabric8.kubernetes.api.model.ServiceSpecAssert;
-import io.fabric8.kubernetes.api.model.extensions.Deployment;
-import io.fabric8.kubernetes.api.model.extensions.ReplicaSet;
+import io.fabric8.kubernetes.api.model.apps.Deployment;
+import io.fabric8.kubernetes.api.model.apps.ReplicaSet;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.openshift.api.model.DeploymentConfig;
 import io.fabric8.openshift.client.OpenShiftAPIGroups;
@@ -50,7 +50,7 @@ public class KubernetesAssert extends AbstractAssert<KubernetesAssert, Kubernete
     /**
      * Creates an asserter using the given namespace
      *
-     * @param namespace
+     * @param namespace namespace name
      * @return an asserter using the given namespace
      */
     public KubernetesNamespaceAssert namespace(String namespace) {

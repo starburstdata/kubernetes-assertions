@@ -1,4 +1,14 @@
-# Don't track "target" folder
-/target/
-/.idea/
-!.mvn/wrapper/maven-wrapper.jar
+.idea
+target
+*.iml
+*.ipr
+*.iws
+notes.md
+.project
+.classpath
+.settings
+.vscode
+velocity.log
+/.metadata/
+/.recommenders/
+.factorypath
