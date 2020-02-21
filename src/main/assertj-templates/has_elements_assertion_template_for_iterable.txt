@@ -12,6 +12,6 @@
       }
     };
     NavigationListAssert<${elementType}, ${elementAssertType}> answer = new NavigationListAssert<${elementType}, ${elementAssertType}>(actual.get${Property}(), assertFactory);
-    answer.describedAs(com.stakater.kubernetes.assertions.Assertions.joinDescription(this, "${property}"));
+    answer.describedAs(io.fabric8.kubernetes.assertions.Assertions.joinDescription(this, "${property}"));
     return answer;
   }

@@ -7,5 +7,5 @@
     isNotNull();
 
     // return the assertion for the property
-    return (${propertyAssertType}) assertThat(actual.get${Property}()).describedAs(com.stakater.kubernetes.assertions.Assertions.joinDescription(this, "${property}"));
+    return (${propertyAssertType}) assertThat(actual.get${Property}()).describedAs(io.fabric8.kubernetes.assertions.Assertions.joinDescription(this, "${property}"));
   }

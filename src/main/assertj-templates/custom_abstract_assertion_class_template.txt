@@ -3,7 +3,7 @@ package ${package};
 ${imports}
 
 import org.assertj.core.api.AssertFactory;
-import com.stakater.kubernetes.assertions.NavigationListAssert;
+import io.fabric8.kubernetes.assertions.NavigationListAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static io.fabric8.kubernetes.assertions.internal.Assertions.assertThat;
