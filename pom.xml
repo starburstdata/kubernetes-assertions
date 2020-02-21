@@ -33,10 +33,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/fabric8io/fabric8-maven-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/fabric8io/fabric8-maven-plugin.git</developerConnection>
+        <connection>scm:git:git://github.com/fabric8io/kubernetes-assertions.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/fabric8io/kubernetes-assertions.git</developerConnection>
         <tag>HEAD</tag>
-        <url>git://github.com/fabric8io/fabric8-maven-plugin.git</url>
+        <url>git://github.com/fabric8io/kubernetes-assertions.git</url>
     </scm>
 
     <repositories>
