@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeploymentPodsAssertTests extends TestBase {
+public class DeploymentPodsAssertTests
+        extends TestBase
+{
     @Test
-    void testPods() {
+    void testPods()
+    {
         DeploymentPodsAssert deploymentPodsAssert = new DeploymentPodsAssert(kClient, new Deployment());
         assertThat(deploymentPodsAssert.pods()).isNotNull();
     }

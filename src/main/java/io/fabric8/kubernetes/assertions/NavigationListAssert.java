@@ -8,15 +8,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 /**
  * Provides helper methods for navigating a list property in a generated assertion class
- *
  */
-public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends FactoryBasedNavigableListAssert<NavigationListAssert<T, EA>, List<? extends T>, T, EA> {
+public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>>
+        extends FactoryBasedNavigableListAssert<NavigationListAssert<T, EA>, List<? extends T>, T, EA>
+{
     private final AssertFactory<T, EA> assertFactory;
 
-    public NavigationListAssert(List<? extends T> actual, AssertFactory<T, EA> assertFactory) {
+    public NavigationListAssert(List<? extends T> actual, AssertFactory<T, EA> assertFactory)
+    {
         super(actual, NavigationListAssert.class, assertFactory);
         this.assertFactory = assertFactory;
     }
@@ -26,7 +27,8 @@ public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends F
      *
      * @return the assertion on the first element
      */
-    public EA first() {
+    public EA first()
+    {
         isNotEmpty();
         return toAssert(actual.get(0), Assertions.joinDescription(this, "first()"));
     }
@@ -36,7 +38,8 @@ public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends F
      *
      * @return the assertion on the last element
      */
-    public EA last() {
+    public EA last()
+    {
         isNotEmpty();
         return toAssert(actual.get(actual.size() - 1), Assertions.joinDescription(this, "last()"));
     }
@@ -46,13 +49,15 @@ public class NavigationListAssert<T, EA extends AbstractAssert<EA, T>> extends F
      *
      * @return the assertion on the given element
      */
-    public EA item(int index) {
+    public EA item(int index)
+    {
         isNotEmpty();
         assertThat(index).describedAs(Assertions.joinDescription(this, "index")).isGreaterThanOrEqualTo(0).isLessThan(actual.size());
         return toAssert(actual.get(index), Assertions.joinDescription(this, "index(" + index + ")"));
     }
 
-    public EA toAssert(T value, String description) {
+    public EA toAssert(T value, String description)
+    {
         return assertFactory.createAssert(value).describedAs(description);
     }
 }

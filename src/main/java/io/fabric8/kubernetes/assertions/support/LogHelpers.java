@@ -9,11 +9,14 @@ import java.io.File;
 import java.util.List;
 
 /**
+ *
  */
-public class LogHelpers {
+public class LogHelpers
+{
     public static final String LOG_FILE_POSTFIX = ".log";
 
-    public static File getLogFileName(File baseDir, String podName, Container container, int restartCount) {
+    public static File getLogFileName(File baseDir, String podName, Container container, int restartCount)
+    {
         File logDir = new File(baseDir, "target/test-pod-logs/");
         String containerName = container.getName();
         String restartCountText = "";
@@ -26,7 +29,8 @@ public class LogHelpers {
         return logFile;
     }
 
-    public static int getRestartCount(Pod pod) {
+    public static int getRestartCount(Pod pod)
+    {
         int restartCount = 0;
         PodStatus podStatus = pod.getStatus();
         if (podStatus != null) {

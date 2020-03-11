@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-public class ServicesAssertTests extends TestBase {
+public class ServicesAssertTests
+        extends TestBase
+{
     @Test
-    void testAssertAllServicesHaveEndpointOrReadyPod() {
+    void testAssertAllServicesHaveEndpointOrReadyPod()
+    {
         Service service = new Service();
         ObjectMeta metadata = new ObjectMeta();
         metadata.setName("Test Service");
@@ -18,7 +21,8 @@ public class ServicesAssertTests extends TestBase {
     }
 
     @Test
-    void testService() {
+    void testService()
+    {
         String serviceName = "Test Service";
         Service service = new Service();
         ObjectMeta metadata = new ObjectMeta();

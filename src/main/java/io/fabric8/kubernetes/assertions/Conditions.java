@@ -12,145 +12,178 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ *
  */
-public class Conditions {
+public class Conditions
+{
 
-    public static <T extends HasMetadata> Condition<T> hasLabel(final String key, final String value) {
-        return new Condition<T>() {
+    public static <T extends HasMetadata> Condition<T> hasLabel(final String key, final String value)
+    {
+        return new Condition<T>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "hasLabel(" + key + " = " + value + ")";
             }
 
             @Override
-            public boolean matches(T resource) {
+            public boolean matches(T resource)
+            {
                 return matchesLabel(resource.getMetadata().getLabels(), key, value);
             }
         };
     }
 
-    public static <T extends HasMetadata>  Condition<T> hasName(final String name) {
-        return new Condition<T>() {
+    public static <T extends HasMetadata> Condition<T> hasName(final String name)
+    {
+        return new Condition<T>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "hasName(" + name + ")";
             }
 
             @Override
-            public boolean matches(T resource) {
+            public boolean matches(T resource)
+            {
                 return Objects.equals(name, resource.getMetadata().getName());
             }
         };
     }
 
-    public static <T extends HasMetadata>  Condition<T> hasNamespace(final String namespace) {
-        return new Condition<T>() {
+    public static <T extends HasMetadata> Condition<T> hasNamespace(final String namespace)
+    {
+        return new Condition<T>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "hasNamespace(" + namespace + ")";
             }
 
             @Override
-            public boolean matches(T resource) {
+            public boolean matches(T resource)
+            {
                 return Objects.equals(namespace, resource.getMetadata().getNamespace());
             }
         };
     }
 
-
-
-    public static Condition<Pod> status(final PodStatusType status) {
-        return new Condition<Pod>() {
+    public static Condition<Pod> status(final PodStatusType status)
+    {
+        return new Condition<Pod>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "podStatus(" + status + ")";
             }
 
             @Override
-            public boolean matches(Pod pod) {
+            public boolean matches(Pod pod)
+            {
                 return Objects.equals(status, KubernetesHelper.getPodStatus(pod));
             }
         };
     }
 
-    public static Condition<Pod> runningStatus() {
+    public static Condition<Pod> runningStatus()
+    {
         return status(PodStatusType.OK);
     }
 
-    public static Condition<Pod> waitingStatus() {
+    public static Condition<Pod> waitingStatus()
+    {
         return status(PodStatusType.WAIT);
     }
 
-    public static Condition<Pod> errorStatus() {
+    public static Condition<Pod> errorStatus()
+    {
         return status(PodStatusType.ERROR);
     }
 
-
-    public static Condition<Pod> podLabel(final String key, final String value) {
-        return new Condition<Pod>() {
+    public static Condition<Pod> podLabel(final String key, final String value)
+    {
+        return new Condition<Pod>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "podLabel(" + key + " = " + value + ")";
             }
 
             @Override
-            public boolean matches(Pod pod) {
+            public boolean matches(Pod pod)
+            {
                 return matchesLabel(pod.getMetadata().getLabels(), key, value);
             }
         };
     }
 
-    public static Condition<Pod> podNamespace(final String namespace) {
-        return new Condition<Pod>() {
+    public static Condition<Pod> podNamespace(final String namespace)
+    {
+        return new Condition<Pod>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "podNamespace(" + namespace + ")";
             }
 
             @Override
-            public boolean matches(Pod pod) {
+            public boolean matches(Pod pod)
+            {
                 return Objects.equals(namespace, pod.getMetadata().getNamespace());
             }
         };
     }
 
-
-    public static Condition<ReplicationController> replicationControllerLabel(final String key, final String value) {
-        return new Condition<ReplicationController>() {
+    public static Condition<ReplicationController> replicationControllerLabel(final String key, final String value)
+    {
+        return new Condition<ReplicationController>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "replicationControllerLabel(" + key + " = " + value + ")";
             }
 
             @Override
-            public boolean matches(ReplicationController replicationControllerSchema) {
+            public boolean matches(ReplicationController replicationControllerSchema)
+            {
                 return matchesLabel(replicationControllerSchema.getMetadata().getLabels(), key, value);
             }
         };
     }
 
-
-    public static Condition<Service> serviceLabel(final String key, final String value) {
-        return new Condition<Service>() {
+    public static Condition<Service> serviceLabel(final String key, final String value)
+    {
+        return new Condition<Service>()
+        {
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return "serviceLabel(" + key + " = " + value + ")";
             }
 
             @Override
-            public boolean matches(Service service) {
+            public boolean matches(Service service)
+            {
                 return matchesLabel(service.getMetadata().getLabels(), key, value);
             }
         };
     }
 
-    public static boolean matchesLabel(Map<String, String> labels, String key, String value) {
+    public static boolean matchesLabel(Map<String, String> labels, String key, String value)
+    {
         if (labels != null) {
             String actual = labels.get(key);
             return Objects.equals(value, actual);
-        } else {
+        }
+        else {
             return false;
         }
     }
-
 }

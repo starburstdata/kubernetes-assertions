@@ -15,13 +15,16 @@ import java.util.Map;
 import static io.fabric8.kubernetes.assertions.Assertions.assertThat;
 import static io.fabric8.utils.Asserts.assertAssertionError;
 
-
 /**
+ *
  */
-class NavigationAssertionTests {
+class NavigationAssertionTests
+{
 
     @Test
-    void testNavigationAssertions() throws Exception {
+    void testNavigationAssertions()
+            throws Exception
+    {
         String expectedId = "abc";
         Map<String, String> expectedLabels = new HashMap<>();
         expectedLabels.put("foo", "bar");
@@ -31,27 +34,35 @@ class NavigationAssertionTests {
         pod.getMetadata().setName(expectedId);
         pod.getMetadata().setLabels(expectedLabels);
 
-
         assertThat(pod).metadata().name().isEqualTo(expectedId);
         assertThat(pod).metadata().labels().isEqualTo(expectedLabels);
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(pod).metadata().name().isEqualTo("cheese");
             }
         });
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(pod).describedAs("my pod").metadata().name().isEqualTo("cheese");
             }
         });
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 Map<String, String> wrongLabels = new HashMap<>();
                 wrongLabels.put("bar", "whatnot");
                 assertThat(pod).metadata().labels().isEqualTo(wrongLabels);
@@ -60,32 +71,44 @@ class NavigationAssertionTests {
     }
 
     @Test
-    void testNullNavigationOnPod() throws Exception {
+    void testNullNavigationOnPod()
+            throws Exception
+    {
         final Pod pod = new Pod();
         pod.setMetadata(null);
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(pod).metadata().name().isEqualTo("cheese");
             }
         });
     }
 
     @Test
-    void testNullNavigationOnRC() throws Exception {
+    void testNullNavigationOnRC()
+            throws Exception
+    {
         final ReplicationController rc = new ReplicationController();
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(rc).spec().template().spec().containers().first().image().isEqualTo("someDockerImageName");
             }
         });
     }
 
     @Test
-    void testNavigationListAssertions() throws Exception {
+    void testNavigationListAssertions()
+            throws Exception
+    {
         final String id1 = "abc";
         final String id2 = "def";
         Map<String, String> labels1 = new HashMap<>();
@@ -103,7 +126,6 @@ class NavigationAssertionTests {
         pod2.getMetadata().setName(id2);
         pod2.getMetadata().setLabels(labels2);
 
-
         final PodList emptyPodList = new PodList();
         final PodList podList = new PodList();
         podList.setItems(new ArrayList<Pod>(Arrays.asList(pod1, pod2)));
@@ -112,26 +134,34 @@ class NavigationAssertionTests {
         assertThat(podList).describedAs("podListWith2Items").items().first().metadata().name().isEqualTo(id1);
         assertThat(podList).describedAs("podListWith2Items").items().last().metadata().name().isEqualTo(id2);
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(podList).describedAs("podListWith2Items").items().item(-1).isNotNull();
             }
         });
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(podList).describedAs("podListWith2Items").items().item(2).isNotNull();
             }
         });
 
-        assertAssertionError(new Block() {
+        assertAssertionError(new Block()
+        {
             @Override
-            public void invoke() throws Exception {
+            public void invoke()
+                    throws Exception
+            {
                 assertThat(podList).describedAs("podListWith2Items").items().first().metadata().name().isEqualTo("shouldNotMatch");
             }
         });
     }
-
 }

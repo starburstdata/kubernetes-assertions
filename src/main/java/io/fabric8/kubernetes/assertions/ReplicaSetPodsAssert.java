@@ -12,18 +12,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ *
  */
-public class ReplicaSetPodsAssert extends ReplicaSetAssert implements HasPodSelectionAssert {
+public class ReplicaSetPodsAssert
+        extends ReplicaSetAssert
+        implements HasPodSelectionAssert
+{
     private final KubernetesClient client;
 
-    public ReplicaSetPodsAssert(KubernetesClient client, ReplicaSet replicasSet) {
+    public ReplicaSetPodsAssert(KubernetesClient client, ReplicaSet replicasSet)
+    {
         super(replicasSet);
         this.client = client;
     }
 
-
     @Override
-    public PodSelectionAssert pods() {
+    public PodSelectionAssert pods()
+    {
         spec().isNotNull().selector().isNotNull();
         ReplicaSetSpec spec = this.actual.getSpec();
         Integer replicas = spec.getReplicas();

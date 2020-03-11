@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MetadatasListAssertTests {
+public class MetadatasListAssertTests
+{
     @Test
-    void testToAssert() {
+    void testToAssert()
+    {
         MetadatasListAssert metadatasListAssert = new MetadatasListAssert<>(new ArrayList<DeploymentConfig>());
         ObjectAssert<DeploymentConfig> oAssert = metadatasListAssert.toAssert(new DeploymentConfig(), "test");
         assertThat(oAssert.descriptionText()).isEqualTo("test");
     }
-
 }

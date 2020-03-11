@@ -16,24 +16,48 @@ import java.util.Set;
 /**
  * Collect the logs from a number of pods so that they can be asserted on
  */
-public class PodLogsAssert extends MapAssert<String, String> {
+public class PodLogsAssert
+        extends MapAssert<String, String>
+{
     private static final transient Logger LOG = LoggerFactory.getLogger(PodLogsAssert.class);
 
     private final String containerName;
     private final Map<String, String> logPrefixes;
 
-    public PodLogsAssert(Map<String, String> actual, String containerName) {
+    public PodLogsAssert(Map<String, String> actual, String containerName)
+    {
         this(actual, containerName, new HashMap<String, String>());
     }
 
-    public PodLogsAssert(Map<String, String> actual, String containerName, Map<String, String> logPrefixes) {
+    public PodLogsAssert(Map<String, String> actual, String containerName, Map<String, String> logPrefixes)
+    {
         super(actual);
         this.containerName = containerName;
         this.logPrefixes = logPrefixes;
         writeLogs();
     }
 
-    public PodLogsAssert afterText(String startText) {
+    /**
+     * Returns the line number and column of the end of text
+     */
+    public static String textCoords(String text)
+    {
+        int line = 1;
+        int idx = 0;
+        while (true) {
+            int next = text.indexOf('\n', idx);
+            if (next < 0) {
+                break;
+            }
+            idx = next + 1;
+            line += 1;
+        }
+        int column = 1 + text.length() - idx;
+        return "" + line + ":" + column;
+    }
+
+    public PodLogsAssert afterText(String startText)
+    {
         Map<String, String> newLogs = new HashMap<>();
         Map<String, String> prefixes = new HashMap<>();
         Set<Map.Entry<String, String>> entries = actual.entrySet();
@@ -53,8 +77,8 @@ public class PodLogsAssert extends MapAssert<String, String> {
         return new PodLogsAssert(newLogs, containerName, prefixes);
     }
 
-
-    public void containsText(String... texts) {
+    public void containsText(String... texts)
+    {
         for (String text : texts) {
             Set<Map.Entry<String, String>> entries = actual.entrySet();
             for (Map.Entry<String, String> entry : entries) {
@@ -69,20 +93,23 @@ public class PodLogsAssert extends MapAssert<String, String> {
         }
     }
 
-    protected String lastLineOf(File file) {
+    protected String lastLineOf(File file)
+    {
         try {
             List<String> lines = IOHelpers.readLines(file);
             int size = lines.size();
             if (size > 0) {
                 return lines.get(size - 1);
             }
-        } catch (IOException e) {
-            LOG.debug("Failed to load: " + file + ". " + e, e );
+        }
+        catch (IOException e) {
+            LOG.debug("Failed to load: " + file + ". " + e, e);
         }
         return "";
     }
 
-    public void doesNotContainText(String... texts) {
+    public void doesNotContainText(String... texts)
+    {
         for (String text : texts) {
             Set<Map.Entry<String, String>> entries = actual.entrySet();
             for (Map.Entry<String, String> entry : entries) {
@@ -93,14 +120,16 @@ public class PodLogsAssert extends MapAssert<String, String> {
                 if (idx >= 0) {
                     Fail.fail("Log of pod " + podName + " in file: " + file + " contains text `" + text
                             + "` at " + logFileCoords(podName, value, idx));
-                } else {
+                }
+                else {
                     LOG.debug("does not contain '" + text + "' in  Log of pod " + podName + " in file: " + file);
                 }
             }
         }
     }
 
-    public void doesNotContainTextCount(int count, String... texts) {
+    public void doesNotContainTextCount(int count, String... texts)
+    {
         if (count == 1) {
             doesNotContainText(texts);
         }
@@ -115,7 +144,8 @@ public class PodLogsAssert extends MapAssert<String, String> {
                     int next = value.indexOf(text, idx);
                     if (next >= 0) {
                         idx = next + 1;
-                    } else {
+                    }
+                    else {
                         idx = next;
                     }
                 }
@@ -123,18 +153,19 @@ public class PodLogsAssert extends MapAssert<String, String> {
                     String logText = fullLogText(podName, value.substring(0, idx - 1));
                     Fail.fail("Log of pod " + podName + " in file: " + file + " contains text `" + text
                             + "` " + count + " times with the last at at " + textCoords(logText));
-                } else {
+                }
+                else {
                     LOG.debug("does not contain '" + text + "' in Log of pod " + podName + " in file: " + file + " " + count + " times");
                 }
             }
         }
     }
 
-
     /**
      * Returns the coordinates in the log file of the end of the bit of text
      */
-    protected String logFileCoords(String podName, String value, int idx) {
+    protected String logFileCoords(String podName, String value, int idx)
+    {
         String prefix = "";
         if (value != null && value.length() > 0 && idx > 0) {
             prefix = value.substring(0, idx);
@@ -143,7 +174,8 @@ public class PodLogsAssert extends MapAssert<String, String> {
         return textCoords(logText);
     }
 
-    protected String fullLogText(String podName, String text) {
+    protected String fullLogText(String podName, String text)
+    {
         String logText = text;
         String logPrefix = logPrefixes.get(podName);
         if (logPrefix != null) {
@@ -152,26 +184,8 @@ public class PodLogsAssert extends MapAssert<String, String> {
         return logText;
     }
 
-
-    /**
-     * Returns the line number and column of the end of text
-     */
-    public static String textCoords(String text) {
-        int line = 1;
-        int idx = 0;
-        while (true) {
-            int next =text.indexOf('\n', idx);
-            if (next < 0) {
-                break;
-            }
-            idx = next + 1;
-            line += 1;
-        }
-        int column = 1 + text.length() - idx;
-        return "" + line + ":" + column;
-    }
-
-    protected File podLogFileName(String podName) {
+    protected File podLogFileName(String podName)
+    {
         // lets return the file we use to store the pod logs
         String basedir = System.getProperty("basedir", ".");
         File dir = new File(basedir, "target/fabric8/systest/logs");
@@ -185,7 +199,8 @@ public class PodLogsAssert extends MapAssert<String, String> {
         return answer;
     }
 
-    private void writeLogs() {
+    private void writeLogs()
+    {
         Set<Map.Entry<String, String>> entries = actual.entrySet();
         for (Map.Entry<String, String> entry : entries) {
             String podName = entry.getKey();
@@ -194,8 +209,9 @@ public class PodLogsAssert extends MapAssert<String, String> {
             File file = podLogFileName(podName);
             try {
                 IOHelpers.writeFully(file, logText);
-            } catch (IOException e) {
-                LOG.error("Failed to write log of pod " + podName + " container:" + containerName + " to file: "+ file + ". " + e, e);
+            }
+            catch (IOException e) {
+                LOG.error("Failed to write log of pod " + podName + " container:" + containerName + " to file: " + file + ". " + e, e);
             }
         }
     }

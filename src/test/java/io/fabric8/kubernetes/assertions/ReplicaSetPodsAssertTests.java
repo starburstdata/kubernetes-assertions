@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ReplicaSetPodsAssertTests extends TestBase {
+public class ReplicaSetPodsAssertTests
+        extends TestBase
+{
     @Test
-    void testPods() {
+    void testPods()
+    {
         ReplicaSetPodsAssert rspAssert = new ReplicaSetPodsAssert(kClient, new ReplicaSet());
         // Needs Kubernetes to be running
         assertThat(rspAssert.pods().getReplicas()).isEqualTo(0);

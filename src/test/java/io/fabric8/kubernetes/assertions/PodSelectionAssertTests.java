@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PodSelectionAssertTests extends TestBase {
+public class PodSelectionAssertTests
+        extends TestBase
+{
     @Test
-    void testIsPodReadyForPeriod() {
+    void testIsPodReadyForPeriod()
+    {
         PodSelectionAssert psAssert =
                 new PodSelectionAssert(kClient, 1, new HashMap<String, String>(), new ArrayList<LabelSelectorRequirement>(), "");
         // Needs Kubernetes to be running

@@ -1,6 +1,5 @@
 package io.fabric8.kubernetes.assertions.support;
 
-import io.fabric8.kubernetes.api.PodStatusType;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodStatus;
@@ -10,9 +9,11 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LogHelpersTests {
+public class LogHelpersTests
+{
     @Test
-    void testGetLogFileName() {
+    void testGetLogFileName()
+    {
         String expected = "C:\\target\\test-pod-logs\\testPod-testContainer-1.log";
         File baseDir = new File("/");
         String podName = "testPod";
@@ -24,7 +25,8 @@ public class LogHelpersTests {
     }
 
     @Test
-    void testGetRestartCount() {
+    void testGetRestartCount()
+    {
         Pod pod = new Pod();
         pod.setStatus(new PodStatus());
         int restartCount = LogHelpers.getRestartCount(pod);

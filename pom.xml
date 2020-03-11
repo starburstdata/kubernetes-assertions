@@ -3,15 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>io.fabric8</groupId>
+    <parent>
+        <groupId>io.takari</groupId>
+        <artifactId>takari</artifactId>
+        <version>27</version>
+    </parent>
+    <groupId>com.starburstdata</groupId>
     <artifactId>kubernetes-assertions</artifactId>
-    <version>4.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>Fabric8 Kubernetes :: Assertions</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>takari-jar</packaging>
     <description>This library provides a bunch of helpful assertj assertions for working with the kubernetes-api.</description>
 
-    <url>http://github.com/fabric8io/kubernetes-assertions</url>
+    <properties>
+        <assertj.core.version>3.15.0</assertj.core.version>
+        <junit-jupiter-api.version>5.6.0</junit-jupiter-api.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <jansi.version>1.11</jansi.version>
+        <fabric8-utils.version>3.0.8</fabric8-utils.version>
+        <kubernetes-client.version>4.8.0</kubernetes-client.version>
+        <!-- Takari -->
+        <takari.transitiveDependencyReference>ignore</takari.transitiveDependencyReference>
+        <takari.privatePackageReference>ignore</takari.privatePackageReference>
+    </properties>
 
     <licenses>
         <license>
@@ -32,45 +45,11 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git://github.com/fabric8io/kubernetes-assertions.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/fabric8io/kubernetes-assertions.git</developerConnection>
-        <tag>HEAD</tag>
-        <url>git://github.com/fabric8io/kubernetes-assertions.git</url>
-    </scm>
-
-    <repositories>
-        <repository>
-            <id>maven-central-plugin-snapshots</id>
-            <name>Maven Central Plugin Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Nexus Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
         <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>kubernetes-api</artifactId>
-            <version>${fabric8-utils.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
@@ -92,6 +71,12 @@
         </dependency>
 
         <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-api</artifactId>
+            <version>${fabric8-utils.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
             <version>${jansi.version}</version>
@@ -105,10 +90,11 @@
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j-log4j12.version}</version>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -168,7 +154,8 @@
 
                         <objectAssertion>navigation_template.txt</objectAssertion>
                         <iterableAssertion>has_elements_assertion_template_for_iterable.txt</iterableAssertion>
-                        <hierarchicalAssertionAbstractClass>custom_abstract_assertion_class_template.txt</hierarchicalAssertionAbstractClass>
+                        <hierarchicalAssertionAbstractClass>custom_abstract_assertion_class_template.txt
+                        </hierarchicalAssertionAbstractClass>
                     </templates>
                 </configuration>
 
@@ -211,109 +198,10 @@
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-api</artifactId>
-                        <version>RELEASE</version>
+                        <version>${junit-jupiter-api.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <assertj.core.version>3.15.0</assertj.core.version>
-        <junit-jupiter-api.version>5.6.0</junit-jupiter-api.version>
-        <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
-        <jansi.version>1.11</jansi.version>
-        <fabric8-utils.version>3.0.8</fabric8-utils.version>
-        <kubernetes-client.version>4.8.0</kubernetes-client.version>
-    </properties>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <configuration>
-                            <passphrase>${env.GPG_PASSPHRASE}</passphrase>
-                            <useAgent>true</useAgent>
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>enforce-no-snapshots-maven-v3</id>
-                                <goals>
-                                    <goal>enforce</goal>
-                                </goals>
-                                <configuration>
-                                    <rules>
-                                        <requireReleaseDeps>
-                                            <message>No Snapshots Allowed!</message>
-                                        </requireReleaseDeps>
-                                        <requireMavenVersion>
-                                            <version>3.0</version>
-                                            <message>Maven minimum required version is 3.0!</message>
-                                        </requireMavenVersion>
-                                    </rules>
-                                    <fail>true</fail>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- take that ... -->
-                                    <additionalparam>-Xdoclint:none</additionalparam>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

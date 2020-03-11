@@ -12,10 +12,13 @@ import java.util.Map;
 /**
  * Adds some extra assertion operations
  */
-public class PodsAssert extends HasMetadatasAssert<Pod, PodsAssert> {
+public class PodsAssert
+        extends HasMetadatasAssert<Pod, PodsAssert>
+{
     private final KubernetesClient client;
 
-    public PodsAssert(List<Pod> actual, KubernetesClient client) {
+    public PodsAssert(List<Pod> actual, KubernetesClient client)
+    {
         super(actual);
         this.client = client;
     }
@@ -23,15 +26,17 @@ public class PodsAssert extends HasMetadatasAssert<Pod, PodsAssert> {
     /**
      * Returns an assertion on the logs of the pods
      */
-    public PodLogsAssert logs() {
+    public PodLogsAssert logs()
+    {
         return logs(null);
     }
 
     /**
      * Returns an assertion on the logs of the pods for the given container name
      */
-    public PodLogsAssert logs(String containerName) {
-        Map<String,String> logs = new HashMap<>();
+    public PodLogsAssert logs(String containerName)
+    {
+        Map<String, String> logs = new HashMap<>();
         List<Pod> pods = get();
         for (Pod pod : pods) {
             ObjectMeta metadata = pod.getMetadata();
@@ -56,26 +61,30 @@ public class PodsAssert extends HasMetadatasAssert<Pod, PodsAssert> {
     /**
      * Returns the filtered list of pods which have running status
      */
-    public PodsAssert runningStatus() {
+    public PodsAssert runningStatus()
+    {
         return filter(Conditions.runningStatus());
     }
 
     /**
      * Returns the filtered list of pods which have waiting status
      */
-    public PodsAssert waitingStatus() {
+    public PodsAssert waitingStatus()
+    {
         return filter(Conditions.waitingStatus());
     }
 
     /**
      * Returns the filtered list of pods which have error status
      */
-    public PodsAssert errorStatus() {
+    public PodsAssert errorStatus()
+    {
         return filter(Conditions.errorStatus());
     }
 
     @Override
-    protected PodsAssert createListAssert(List<Pod> list) {
+    protected PodsAssert createListAssert(List<Pod> list)
+    {
         return new PodsAssert(list, client);
     }
 }

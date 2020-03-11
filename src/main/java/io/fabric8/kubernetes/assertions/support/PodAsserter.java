@@ -1,10 +1,7 @@
 package io.fabric8.kubernetes.assertions.support;
 
 import io.fabric8.kubernetes.api.KubernetesHelper;
-import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.utils.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +13,11 @@ import static org.fusesource.jansi.Ansi.Color.YELLOW;
 import static org.fusesource.jansi.Ansi.ansi;
 
 /**
+ *
  */
-public class PodAsserter implements Closeable {
+public class PodAsserter
+        implements Closeable
+{
     private static final transient Logger LOG = LoggerFactory.getLogger(PodAsserter.class);
 
     private final PodWatcher watcher;
@@ -25,25 +25,30 @@ public class PodAsserter implements Closeable {
     private final Pod pod;
     private Timer timer;
 
-    private TimerTask task = new TimerTask() {
+    private TimerTask task = new TimerTask()
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             watcher.podIsReadyForEntireDuration(name, pod);
         }
     };
 
-    public PodAsserter(PodWatcher watcher, String name, Pod pod) {
+    public PodAsserter(PodWatcher watcher, String name, Pod pod)
+    {
         this.watcher = watcher;
         this.name = name;
         this.pod = pod;
         updated(pod);
     }
 
-    public void close() {
+    public void close()
+    {
         cancelTimer();
     }
 
-    public void updated(Pod pod) {
+    public void updated(Pod pod)
+    {
         String statusText = KubernetesHelper.getPodStatusText(pod);
         boolean ready = KubernetesHelper.isPodReady(pod);
 
@@ -57,12 +62,14 @@ public class PodAsserter implements Closeable {
                 timer = new Timer(watcher.getDescription());
                 timer.schedule(task, watcher.getReadyPeriodMS());
             }
-        } else {
+        }
+        else {
             cancelTimer();
         }
     }
 
-    protected void cancelTimer() {
+    protected void cancelTimer()
+    {
         if (timer != null) {
             timer.cancel();
             timer = null;

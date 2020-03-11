@@ -4,9 +4,12 @@ import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.Service;
 import org.junit.jupiter.api.Test;
 
-public class ServicePodsAssertTests extends TestBase {
+public class ServicePodsAssertTests
+        extends TestBase
+{
     @Test
-    void testHasEndpointOrReadyPod() {
+    void testHasEndpointOrReadyPod()
+    {
         Service service = new Service();
         ObjectMeta metadata = new ObjectMeta();
         metadata.setName("Test Service");

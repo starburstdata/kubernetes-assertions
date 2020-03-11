@@ -11,18 +11,23 @@ import static io.fabric8.kubernetes.api.KubernetesHelper.getName;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ *
  */
-public class ServicesAssert extends ListAssert<Service> {
+public class ServicesAssert
+        extends ListAssert<Service>
+{
     private final KubernetesClient client;
     private final List<? extends Service> actual;
 
-    public ServicesAssert(KubernetesClient client, List<? extends Service> actual) {
+    public ServicesAssert(KubernetesClient client, List<? extends Service> actual)
+    {
         super(actual);
         this.client = client;
         this.actual = actual;
     }
 
-    public ServicesAssert assertAllServicesHaveEndpointOrReadyPod() {
+    public ServicesAssert assertAllServicesHaveEndpointOrReadyPod()
+    {
         for (Service service : actual) {
             ServicePodsAssert asserter = new ServicePodsAssert(client, service);
             asserter.hasEndpointOrReadyPod();
@@ -35,7 +40,8 @@ public class ServicesAssert extends ListAssert<Service> {
      *
      * @return the assertion object on the given service
      */
-    public ServicePodsAssert service(String serviceName) {
+    public ServicePodsAssert service(String serviceName)
+    {
         Service service = null;
         for (Service aService : actual) {
             String name = getName(aService);
@@ -46,6 +52,4 @@ public class ServicesAssert extends ListAssert<Service> {
         assertThat(service).describedAs("No service could be found for name: " + serviceName).isNotNull();
         return new ServicePodsAssert(client, service);
     }
-
-
 }

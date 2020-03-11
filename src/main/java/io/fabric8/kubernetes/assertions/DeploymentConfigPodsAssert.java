@@ -14,15 +14,20 @@ import java.util.Map;
 /**
  * Adds assertions for asserting that a Deployment starts up correctly etc
  */
-public class DeploymentConfigPodsAssert extends DeploymentConfigAssert implements HasPodSelectionAssert {
+public class DeploymentConfigPodsAssert
+        extends DeploymentConfigAssert
+        implements HasPodSelectionAssert
+{
     private final KubernetesClient client;
 
-    public DeploymentConfigPodsAssert(KubernetesClient client, DeploymentConfig deployment) {
+    public DeploymentConfigPodsAssert(KubernetesClient client, DeploymentConfig deployment)
+    {
         super(deployment);
         this.client = client;
     }
 
-    public PodSelectionAssert pods() {
+    public PodSelectionAssert pods()
+    {
         spec().isNotNull().selector().isNotNull();
         DeploymentConfigSpec spec = this.actual.getSpec();
         Integer replicas = spec.getReplicas();
