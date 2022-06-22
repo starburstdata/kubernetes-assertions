@@ -20,7 +20,7 @@
         <slf4j.version>1.7.30</slf4j.version>
         <jansi.version>1.11</jansi.version>
         <fabric8-utils.version>3.0.8</fabric8-utils.version>
-        <kubernetes-client.version>4.8.0</kubernetes-client.version>
+        <kubernetes-client.version>4.11.2</kubernetes-client.version>
         <!-- Takari -->
         <takari.transitiveDependencyReference>ignore</takari.transitiveDependencyReference>
         <takari.privatePackageReference>ignore</takari.privatePackageReference>
