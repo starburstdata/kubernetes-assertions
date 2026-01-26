@@ -15,7 +15,7 @@
     <description>This library provides a bunch of helpful assertj assertions for working with the kubernetes-api.</description>
 
     <properties>
-        <assertj.core.version>3.15.0</assertj.core.version>
+        <assertj.core.version>3.27.7</assertj.core.version>
         <junit-jupiter-api.version>5.6.0</junit-jupiter-api.version>
         <slf4j.version>1.7.30</slf4j.version>
         <jansi.version>1.11</jansi.version>
